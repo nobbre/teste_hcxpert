@@ -1,0 +1,101 @@
+name: 🎯 Manual Test Execution
+
+on:
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: "Browser para executar os testes"
+        required: true
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
+        default: chrome
+      tags:
+        description: "Tags dos cenários (ex: @smoke, @api, @e2e)"
+        required: false
+        type: string
+        default: ""
+      spec:
+        description: "Spec file específico (deixe vazio para todos)"
+        required: false
+        type: string
+        default: "cypress/e2e/features/**/*.feature"
+
+jobs:
+  manual-cypress-tests:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: 🚚 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🧪 Run Cypress Tests - ${{ inputs.browser }}
+        uses: cypress-io/github-action@v6
+        with:
+          browser: ${{ inputs.browser }}
+          headed: false
+          spec: ${{ inputs.spec }}
+        env:
+          CYPRESS_baseUrl: https://www.automationexercise.com
+          CYPRESS_grepTags: ${{ inputs.tags }}
+
+      - name: 📊 Generate Test Report
+        if: always()
+        run: |
+          npm run report || echo "Report generation skipped"
+
+      - name: 📸 Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-screenshots-${{ inputs.browser }}-${{ github.run_number }}
+          path: cypress/evidencias/**/*.png
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: 📹 Upload Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-videos-${{ inputs.browser }}-${{ github.run_number }}
+          path: cypress/videos
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: 📄 Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-reports-${{ inputs.browser }}-${{ github.run_number }}
+          path: |
+            reports/**/*
+            cypress/evidencias/**/*.html
+            cypress/evidencias/**/*.txt
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: 📊 Test Results Summary
+        if: always()
+        run: |
+          echo "## 🧪 Manual Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Browser:** ${{ inputs.browser }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tags:** ${{ inputs.tags || 'All tests' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Spec:** ${{ inputs.spec }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📁 Check artifacts for detailed results" >> $GITHUB_STEP_SUMMARY
+
+      - name: ✅ Tests Complete
+        run: echo "🎉 Manual test execution completed!"

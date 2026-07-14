@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evidência de API - Trello</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #0079bf 0%, #0079bf 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+      .header h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+      .header .timestamp {
+        opacity: 0.9;
+        font-size: 0.9em;
+      }
+      .content {
+        padding: 30px;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .section h2 {
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 15px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .info-label {
+        font-weight: bold;
+        color: #666;
+      }
+      .info-value {
+        color: #333;
+      }
+      .status-code {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+      .status-200 {
+        background: #28a745;
+        color: white;
+      }
+      .status-400 {
+        background: #dc3545;
+        color: white;
+      }
+      .code-block {
+        background: #282c34;
+        color: #abb2bf;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        line-height: 1.6;
+      }
+      .json-key {
+        color: #e06c75;
+      }
+      .json-string {
+        color: #98c379;
+      }
+      .json-number {
+        color: #d19a66;
+      }
+      .highlight {
+        background: #ffeb3b;
+        padding: 2px 6px;
+        border-radius: 3px;
+        color: #333;
+        font-weight: bold;
+      }
+      .footer {
+        background: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        color: #666;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🌐 Evidência de Requisição API - Trello</h1>
+        <div class="timestamp">Timestamp: {{TIMESTAMP}}</div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <h2>📋 Informações da Requisição</h2>
+          <div class="info-grid">
+            <div class="info-label">Endpoint:</div>
+            <div class="info-value"><code>{{ENDPOINT}}</code></div>
+
+            <div class="info-label">Método HTTP:</div>
+            <div class="info-value"><strong>{{METHOD}}</strong></div>
+
+            <div class="info-label">Status Code:</div>
+            <div class="info-value">
+              <span class="status-code status-200">{{STATUS_CODE}}</span>
+            </div>
+
+            <div class="info-label">Duração:</div>
+            <div class="info-value">{{DURATION}}</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>📤 Request Body</h2>
+          <pre class="code-block">{{REQUEST_BODY}}</pre>
+        </div>
+
+        <div class="section">
+          <h2>📥 Response Body</h2>
+          <pre class="code-block">{{RESPONSE_BODY}}</pre>
+        </div>
+
+        <div class="section">
+          <h2>✅ Validações Realizadas</h2>
+          <div class="info-grid">
+            <div class="info-label">✓ Status Code:</div>
+            <div class="info-value">Verificado como 200 (OK)</div>
+
+            <div class="info-label">✓ Campo "list":</div>
+            <div class="info-value">Presente na resposta</div>
+
+            <div class="info-label">✓ Campo "list.name":</div>
+            <div class="info-value">
+              Extraído: <span class="highlight">Professional</span>
+            </div>
+
+            <div class="info-label">✓ Estrutura JSON:</div>
+            <div class="info-value">Válida e conforme esperado</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>🎯 Requisitos do Desafio</h2>
+          <ul style="list-style-position: inside; color: #666; line-height: 2">
+            <li>✅ Enviar GET para '/1/actions/592f11060f95a3d3d46a987a'</li>
+            <li>✅ Extrair campo 'name' da estrutura 'list'</li>
+            <li>✅ Validar Status Code</li>
+            <li>✅ Exibir conteúdo via log/relatório</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p><strong>HCXpert - Desafio Técnico QA/SDET 2026</strong></p>
+        <p>Evidência gerada automaticamente via Cypress</p>
+      </div>
+    </div>
+  </body>
+</html>

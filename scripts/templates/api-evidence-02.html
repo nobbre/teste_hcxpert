@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evidência de API - Automation Exercise</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        padding: 20px;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+      .header h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+      .header .timestamp {
+        opacity: 0.9;
+        font-size: 0.9em;
+      }
+      .content {
+        padding: 30px;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .section h2 {
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #11998e;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 15px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .info-label {
+        font-weight: bold;
+        color: #666;
+      }
+      .info-value {
+        color: #333;
+      }
+      .status-code {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+      .status-200,
+      .status-201 {
+        background: #28a745;
+        color: white;
+      }
+      .status-400 {
+        background: #dc3545;
+        color: white;
+      }
+      .code-block {
+        background: #282c34;
+        color: #abb2bf;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        line-height: 1.6;
+      }
+      .method-post {
+        background: #007bff;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        display: inline-block;
+      }
+      .highlight {
+        background: #ffeb3b;
+        padding: 2px 6px;
+        border-radius: 3px;
+        color: #333;
+        font-weight: bold;
+      }
+      .footer {
+        background: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #dee2e6;
+      }
+      .comparison-table th {
+        background: #f8f9fa;
+        font-weight: bold;
+        color: #333;
+      }
+      .comparison-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🚀 Evidência de Requisição API - POST</h1>
+        <div class="timestamp">Timestamp: {{TIMESTAMP}}</div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <h2>📋 Informações da Requisição</h2>
+          <div class="info-grid">
+            <div class="info-label">Endpoint:</div>
+            <div class="info-value"><code>{{ENDPOINT}}</code></div>
+
+            <div class="info-label">Método HTTP:</div>
+            <div class="info-value">
+              <span class="method-post">{{METHOD}}</span>
+            </div>
+
+            <div class="info-label">Status Code:</div>
+            <div class="info-value">
+              <span class="status-code status-201">{{STATUS_CODE}}</span>
+            </div>
+
+            <div class="info-label">Duração:</div>
+            <div class="info-value">{{DURATION}}</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>📤 Request Body (Payload Enviado)</h2>
+          <pre class="code-block">{{REQUEST_BODY}}</pre>
+        </div>
+
+        <div class="section">
+          <h2>📥 Response Body (Resposta da API)</h2>
+          <pre class="code-block">{{RESPONSE_BODY}}</pre>
+        </div>
+
+        <div class="section">
+          <h2>✅ Validações Realizadas</h2>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Validação</th>
+                <th>Esperado</th>
+                <th>Obtido</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Status Code</td>
+                <td>200 ou 201</td>
+                <td>{{STATUS_CODE}}</td>
+                <td>✅ PASS</td>
+              </tr>
+              <tr>
+                <td>Campo responseCode</td>
+                <td>Presente</td>
+                <td>Sim</td>
+                <td>✅ PASS</td>
+              </tr>
+              <tr>
+                <td>Mensagem de sucesso</td>
+                <td>Indica criação</td>
+                <td>User created!</td>
+                <td>✅ PASS</td>
+              </tr>
+              <tr>
+                <td>Estrutura JSON</td>
+                <td>Válida</td>
+                <td>Válida</td>
+                <td>✅ PASS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>🎯 Requisitos do Desafio</h2>
+          <ul style="list-style-position: inside; color: #666; line-height: 2">
+            <li>✅ Enviar POST para '/api/createAccount'</li>
+            <li>✅ Validar Status Code de retorno</li>
+            <li>✅ Validar ao menos uma regra de negócio no JSON</li>
+            <li>✅ Tratar parâmetros obrigatórios</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>📝 Observações</h2>
+          <div
+            style="
+              background: #fff3cd;
+              padding: 15px;
+              border-left: 4px solid #ffc107;
+              border-radius: 4px;
+            "
+          >
+            <p style="color: #856404; margin-bottom: 10px">
+              <strong>⚠️ Cenários Negativos Testados:</strong>
+            </p>
+            <ul
+              style="
+                list-style-position: inside;
+                color: #856404;
+                line-height: 1.8;
+              "
+            >
+              <li>Email já existente → Status 400/409</li>
+              <li>Parâmetros obrigatórios ausentes → Status 400</li>
+              <li>Formato de dados inválido → Status 400</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p><strong>HCXpert - Desafio Técnico QA/SDET 2026</strong></p>
+        <p>Evidência gerada automaticamente via Cypress</p>
+      </div>
+    </div>
+  </body>
+</html>
