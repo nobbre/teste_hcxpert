@@ -8,6 +8,19 @@ let apiResponse;
 let requestBody;
 let listName;
 
+// Helper: Parse JSON body se for string
+const getResponseBody = () => {
+  let body = apiResponse.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch (e) {
+      // Se não for JSON válido, mantém como string
+    }
+  }
+  return body;
+};
+
 // ============================================
 // TRELLO API - Step Definitions
 // ============================================
@@ -43,7 +56,7 @@ Then("o status code da resposta deve ser {int}", (expectedStatusCode) => {
 
 Then("o corpo da resposta deve conter o campo {string}", (fieldPath) => {
   const fields = fieldPath.split(".");
-  let value = apiResponse.body;
+  let value = getResponseBody();
 
   fields.forEach((field) => {
     expect(value).to.have.property(field);
@@ -53,7 +66,7 @@ Then("o corpo da resposta deve conter o campo {string}", (fieldPath) => {
 
 Then("o campo {string} deve estar presente e não vazio", (fieldPath) => {
   const fields = fieldPath.split(".");
-  let value = apiResponse.body;
+  let value = getResponseBody();
 
   fields.forEach((field) => {
     expect(value).to.have.property(field);
@@ -65,7 +78,7 @@ Then("o campo {string} deve estar presente e não vazio", (fieldPath) => {
 
 Then("devo extrair e registrar o valor do campo {string}", (fieldPath) => {
   const fields = fieldPath.split(".");
-  let value = apiResponse.body;
+  let value = getResponseBody();
 
   fields.forEach((field) => {
     value = value[field];
@@ -83,9 +96,10 @@ Then("devo extrair e registrar o valor do campo {string}", (fieldPath) => {
 
 Then("a resposta deve conter os campos obrigatórios:", (dataTable) => {
   const requiredFields = dataTable.rawTable.slice(1).map((row) => row[0]);
+  const body = getResponseBody();
 
   requiredFields.forEach((field) => {
-    expect(apiResponse.body).to.have.property(field);
+    expect(body).to.have.property(field);
     cy.log(`✓ Campo "${field}" encontrado`);
   });
 });
@@ -115,6 +129,13 @@ When(
     dataTable.rawTable.slice(1).forEach((row) => {
       requestBody[row[0]] = row[1];
     });
+
+    // Adiciona timestamp ao email para garantir unicidade
+    if (requestBody.email) {
+      const timestamp = Date.now();
+      requestBody.email = requestBody.email.replace("@", `+${timestamp}@`);
+      cy.log(`Email único gerado: ${requestBody.email}`);
+    }
 
     cy.request({
       method: "POST",
@@ -183,17 +204,11 @@ When(
   },
 );
 
-Then(
-  "o status code da resposta deve ser {int} ou {int}",
-  (statusCode1, statusCode2) => {
-    expect([statusCode1, statusCode2]).to.include(apiResponse.status);
-  },
-);
-
 Then("o corpo da resposta deve conter mensagem de erro", () => {
-  expect(apiResponse.body).to.exist;
+  const body = getResponseBody();
+  expect(body).to.exist;
   // A API pode retornar o erro de várias formas
-  const bodyStr = JSON.stringify(apiResponse.body).toLowerCase();
+  const bodyStr = JSON.stringify(body).toLowerCase();
   const hasError =
     bodyStr.includes("error") ||
     bodyStr.includes("exist") ||
@@ -203,14 +218,16 @@ Then("o corpo da resposta deve conter mensagem de erro", () => {
 });
 
 Then("a mensagem deve indicar que o email já existe", () => {
-  const bodyStr = JSON.stringify(apiResponse.body).toLowerCase();
+  const body = getResponseBody();
+  const bodyStr = JSON.stringify(body).toLowerCase();
   const hasEmailExistsMessage =
     bodyStr.includes("exist") || bodyStr.includes("already");
   expect(hasEmailExistsMessage).to.be.true;
 });
 
 Then("o corpo da resposta deve indicar parâmetros faltantes", () => {
-  const bodyStr = JSON.stringify(apiResponse.body).toLowerCase();
+  const body = getResponseBody();
+  const bodyStr = JSON.stringify(body).toLowerCase();
   const hasMissingParamsMessage =
     bodyStr.includes("required") ||
     bodyStr.includes("missing") ||
@@ -220,8 +237,9 @@ Then("o corpo da resposta deve indicar parâmetros faltantes", () => {
 
 Then("a resposta deve indicar sucesso na criação", () => {
   // Verifica se a resposta indica sucesso
-  if (typeof apiResponse.body === "object") {
-    const bodyStr = JSON.stringify(apiResponse.body).toLowerCase();
+  const body = getResponseBody();
+  if (typeof body === "object") {
+    const bodyStr = JSON.stringify(body).toLowerCase();
     const isSuccess =
       bodyStr.includes("success") ||
       bodyStr.includes("created") ||

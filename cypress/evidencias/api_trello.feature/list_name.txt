@@ -1,0 +1,3 @@
+Campo: data.list.name
+Valor: Professional
+Timestamp: 2026-07-14T13:00:19.854Z

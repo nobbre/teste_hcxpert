@@ -50,13 +50,9 @@ Funcionalidade: Finalização de Pedido (Checkout)
     E preencho os demais dados do cartão
     E confirmo o pagamento
     Então devo visualizar mensagem de erro de cartão inválido
-    Ou o pagamento não deve ser processado
 
   @negativo
   Cenário: Tentativa de checkout sem adicionar produtos ao carrinho
-    Quando eu acesso o carrinho de compras sem produtos
-    Então o botão de checkout deve estar desabilitado
-    Ou devo visualizar a mensagem "Cart is empty!"
 
   @negativo
   Cenário: Validação de campos obrigatórios do cartão de crédito

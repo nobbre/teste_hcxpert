@@ -343,6 +343,117 @@ npx cypress run --reporter cypress-multi-reporters --reporter-options configFile
 
 ---
 
+## 🚀 GitHub Actions - CI/CD Automatizado
+
+O projeto possui **2 workflows automatizados** configurados:
+
+### Workflows Disponíveis
+
+#### 1. Auto PR com Testes (`auto-pr.yaml`)
+
+**Trigger:** Push em qualquer branch (exceto main)
+
+```bash
+# Criar nova branch e fazer push
+git checkout -b feature/minha-feature
+git add .
+git commit -m "feat: nova funcionalidade"
+git push origin feature/minha-feature
+
+# O workflow irá:
+# 1. Executar todos os testes Cypress
+# 2. Gerar evidências e relatórios
+# 3. Criar PR automaticamente se testes passarem ✅
+```
+
+#### 2. Execução Manual (`manual-tests.yaml`)
+
+**Trigger:** Manual via GitHub UI
+
+1. Acesse: `Actions` → `Manual Test Execution`
+2. Clique em `Run workflow`
+3. Configure:
+   - **Browser:** chrome / firefox / edge
+   - **Tags:** @smoke, @api, @e2e, etc.
+   - **Spec:** arquivo específico ou todos
+
+**Exemplos de uso:**
+
+```yaml
+# Executar apenas testes smoke no Chrome
+Browser: chrome
+Tags: @smoke
+Spec: (vazio)
+
+# Executar testes de API no Firefox
+Browser: firefox
+Tags: @api
+Spec: cypress/e2e/features/api_trello.feature
+
+# Executar teste E2E no Edge
+Browser: edge
+Tags: @e2e
+Spec: (vazio)
+```
+
+### Baixar Artifacts do GitHub Actions
+
+```bash
+# Via GitHub CLI (gh)
+gh run list
+gh run download <run-id>
+
+# Ou manualmente via UI:
+# 1. Vá para Actions → Selecione o workflow
+# 2. Scroll até "Artifacts"
+# 3. Clique para baixar (Screenshots, Videos, Reports)
+```
+
+### Ver Status dos Workflows
+
+```bash
+# Listar últimas execuções
+gh run list --workflow=auto-pr.yaml
+
+# Ver detalhes de uma execução
+gh run view <run-id>
+
+# Ver logs
+gh run view <run-id> --log
+
+# Re-executar workflow falhado
+gh run rerun <run-id>
+```
+
+---
+
+## 🔗 Links Úteis
+
+- **Documentação Cypress:** https://docs.cypress.io
+- **Cucumber Preprocessor:** https://github.com/badeball/cypress-cucumber-preprocessor
+- **GitHub Actions Docs:** https://docs.github.com/en/actions
+- **Automation Exercise:** https://www.automationexercise.com
+
+---
+
+## 📞 Suporte
+
+Para dúvidas ou problemas:
+
+1. Verifique a documentação em `/docs`
+2. Consulte `QUICK_START.md` para guia rápido
+3. Verifique `MATRIZ_ENTREGAS.md` para requisitos do projeto
+4. Revise `.github/workflows/README.md` para detalhes dos workflows
+
+---
+
+**Última atualização:** 2026-07-14  
+**Projeto:** HCXpert QA/SDET Technical Challenge 2026
+
+````
+
+---
+
 ## 🚀 CI/CD
 
 ```bash
@@ -354,7 +465,7 @@ npx cypress run --record --key <record-key> --parallel
 
 # Executar com variáveis de CI
 CI=true npx cypress run
-```
+````
 
 ---
 

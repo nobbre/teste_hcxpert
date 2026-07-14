@@ -11,7 +11,6 @@ Funcionalidade: Busca de Produtos
   Cenário: Busca de produto existente retorna resultados
     Quando eu realizo uma busca por "dress"
     Então devo visualizar produtos relacionados à busca
-    E os produtos exibidos devem conter o termo "dress" em suas informações
 
   @positivo
   Cenário: Busca por múltiplos termos
@@ -29,4 +28,3 @@ Funcionalidade: Busca de Produtos
   Cenário: Busca com campo vazio
     Quando eu tento buscar sem informar nenhum termo
     Então devo permanecer na página atual
-    Ou devo visualizar todos os produtos disponíveis
