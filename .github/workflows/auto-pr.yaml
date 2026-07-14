@@ -107,22 +107,26 @@ jobs:
                     gh pr comment "$PR_NUMBER" --body "🔄 Testes executados novamente com sucesso! ✅"
                   else
                     echo "📝 Criando nova PR..."
+                    BODY=$(cat <<EOF
+                  ## ✅ Testes Cypress Aprovados
+
+                  **Branch:** \`$BRANCH\`
+                  **Último Commit:** $COMMIT_MSG
+                  **Autor:** $COMMIT_AUTHOR
+
+                  ### 🧪 Status dos Testes
+                  - ✅ Todos os testes Cypress passaram
+                  - 📊 Evidências e relatórios disponíveis nos artifacts
+                  - 🔗 Run: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+                  ---
+                  *PR criada automaticamente pelo GitHub Actions*
+                  EOF
+                  )
                     gh pr create \
                       --base main \
                       --head "$BRANCH" \
                       --title "🚀 $BRANCH → main" \
-                      --body "## ✅ Testes Cypress Aprovados
-
-**Branch:** \`$BRANCH\`
-**Último Commit:** $COMMIT_MSG
-**Autor:** $COMMIT_AUTHOR
-
-### 🧪 Status dos Testes
-- ✅ Todos os testes Cypress passaram
-- 📊 Evidências e relatórios disponíveis nos artifacts
-- 🔗 Run: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
----
-*PR criada automaticamente pelo GitHub Actions*"
+                      --body "$BODY"
                     echo "✅ PR criada com sucesso!"
                   fi
