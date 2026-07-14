@@ -1,0 +1,55 @@
+{
+  "name": "teste_hcxpert",
+  "version": "1.0.0",
+  "description": "HCXpert QA Challenge - Automação de Testes com Cypress e Cucumber",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "cypress run",
+    "test:headed": "cypress run --headed",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:edge": "cypress run --browser edge",
+    "open": "cypress open --e2e --browser chrome",
+    "test:login": "cypress run --spec 'cypress/e2e/features/login.feature'",
+    "test:search": "cypress run --spec 'cypress/e2e/features/search.feature'",
+    "test:cart": "cypress run --spec 'cypress/e2e/features/add_to_cart.feature'",
+    "test:checkout": "cypress run --spec 'cypress/e2e/features/checkout.feature'",
+    "test:api": "cypress run --spec 'cypress/e2e/features/api_trello.feature'",
+    "test:smoke": "cypress run --env grepTags=@smoke",
+    "report": "node scripts/generate-report.mjs",
+    "api:evidencias": "node scripts/capture-api-evidencias.mjs",
+    "xray:upload": "node scripts/upload-xray.mjs",
+    "clean": "rm -rf cypress/evidencias/* cypress/screenshots/* cypress/videos/*",
+    "full:test": "npm run clean && npm run test && npm run report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nobbre/teste_hcxpert.git"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber",
+    "bdd",
+    "automation",
+    "qa",
+    "testing",
+    "e2e"
+  ],
+  "author": "HCXpert QA Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nobbre/teste_hcxpert/issues"
+  },
+  "homepage": "https://github.com/nobbre/teste_hcxpert#readme",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^26.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "^15.18.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/step_definitions/**/*.{js,ts}",
+    "filterSpecs": true,
+    "omitFiltered": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "validUser": {
+    "name": "Test User HCXpert",
+    "email": "nobbre@hcxpert.com",
+    "password": "Poss1506$",
+    "title": "Mr",
+    "birthDay": "15",
+    "birthMonth": "6",
+    "birthYear": "1970",
+    "firstName": "Antonio",
+    "lastName": "Nobre",
+    "company": "HCXpert",
+    "address": "123 Test Street",
+    "address2": "Apt 456",
+    "country": "United States",
+    "state": "California",
+    "city": "Los Angeles",
+    "zipcode": "90001",
+    "mobileNumber": "+1 555-0123"
+  },
+  "invalidUser": {
+    "email": "invalid@test.com",
+    "password": "wrongpassword"
+  },
+  "checkoutInfo": {
+    "cardName": "Test User",
+    "cardNumber": "4242424242424242",
+    "cvc": "123",
+    "expiryMonth": "12",
+    "expiryYear": "2028"
+  }
+}
