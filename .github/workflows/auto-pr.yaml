@@ -86,10 +86,13 @@ jobs:
             - name: 🔍 Get Commit Info
               id: commit-info
               run: |
-                  COMMIT_MSG=$(git log -1 --pretty=%B)
                   COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-                  echo "message=$COMMIT_MSG" >> $GITHUB_OUTPUT
-                  echo "author=$COMMIT_AUTHOR" >> $GITHUB_OUTPUT
+                  {
+                    echo "message<<COMMIT_MSG_EOF"
+                    git log -1 --pretty=%B
+                    echo "COMMIT_MSG_EOF"
+                  } >> "$GITHUB_OUTPUT"
+                  echo "author=$COMMIT_AUTHOR" >> "$GITHUB_OUTPUT"
 
             - name: ✅ Create Pull Request
               env:
