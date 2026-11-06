@@ -3,7 +3,7 @@
 ## HCXpert - Desafio Técnico QA/SDET 2026
 
 **Data:** 2026-07-13  
-**Candidato:** [Seu Nome]  
+**Candidato:** Antonio Nobre Machado  
 **Projeto:** teste_hcxpert
 
 ---
@@ -518,7 +518,7 @@ Além dos requisitos obrigatórios:
 
 ## 📌 Assinaturas
 
-**Desenvolvido por:** [Seu Nome]  
+**Desenvolvido por:** Antonio Nobre Machado  
 **Data:** 13/07/2026  
 **Versão:** 1.0.0  
 **Status:** ✅ **COMPLETO - PRONTO PARA AVALIAÇÃO**

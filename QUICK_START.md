@@ -233,11 +233,11 @@ mkdir cypress/evidencias/minha_feature.feature
 
 | Tag | Uso | Exemplo |
 |-----|-----|---------|
-| `@smoke` | Testes críticos | `npx cypress run --env grepTags=@smoke` |
-| `@positivo` | Fluxos felizes | `npx cypress run --env grepTags=@positivo` |
-| `@negativo` | Casos de erro | `npx cypress run --env grepTags=@negativo` |
-| `@api` | Testes de API | `npx cypress run --env grepTags=@api` |
-| `@e2e` | Testes end-to-end | `npx cypress run --env grepTags=@e2e` |
+| `@smoke` | Testes críticos | `npx cypress run --env tags=@smoke` |
+| `@positivo` | Fluxos felizes | `npx cypress run --env tags=@positivo` |
+| `@negativo` | Casos de erro | `npx cypress run --env tags=@negativo` |
+| `@api` | Testes de API | `npx cypress run --env tags=@api` |
+| `@e2e` | Testes end-to-end | `npx cypress run --env tags=@e2e` |
 
 ---
 

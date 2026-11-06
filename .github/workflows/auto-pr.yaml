@@ -69,6 +69,7 @@ jobs:
                   name: cypress-reports-${{ github.run_number }}
                   path: |
                       reports/**/*
+                      cypress/reports/**/*
                       cypress/evidencias/**/*.html
                   if-no-files-found: ignore
                   retention-days: 30

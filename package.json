@@ -16,7 +16,7 @@
     "test:cart": "cypress run --spec 'cypress/e2e/features/add_to_cart.feature'",
     "test:checkout": "cypress run --spec 'cypress/e2e/features/checkout.feature'",
     "test:api": "cypress run --spec 'cypress/e2e/features/api_trello.feature'",
-    "test:smoke": "cypress run --env grepTags=@smoke",
+    "test:smoke": "cypress run --env tags=@smoke",
     "report": "node scripts/generate-report.mjs",
     "api:evidencias": "node scripts/capture-api-evidencias.mjs",
     "xray:upload": "node scripts/upload-xray.mjs",
@@ -36,7 +36,7 @@
     "testing",
     "e2e"
   ],
-  "author": "HCXpert QA Team",
+  "author": "Antonio Nobre Machado",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nobbre/teste_hcxpert/issues"

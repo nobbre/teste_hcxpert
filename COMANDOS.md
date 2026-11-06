@@ -72,25 +72,25 @@ npm run test:smoke
 
 ```bash
 # Apenas testes @smoke
-npx cypress run --env grepTags=@smoke
+npx cypress run --env tags=@smoke
 
 # Apenas testes @positivo
-npx cypress run --env grepTags=@positivo
+npx cypress run --env tags=@positivo
 
 # Apenas testes @negativo
-npx cypress run --env grepTags=@negativo
+npx cypress run --env tags=@negativo
 
 # Apenas testes @api
-npx cypress run --env grepTags=@api
+npx cypress run --env tags=@api
 
 # Apenas testes @e2e
-npx cypress run --env grepTags=@e2e
+npx cypress run --env tags=@e2e
 
 # Combinar tags (E)
-npx cypress run --env grepTags="@smoke+@positivo"
+npx cypress run --env tags="@smoke and @positivo"
 
 # Combinar tags (OU)
-npx cypress run --env grepTags="@smoke @api"
+npx cypress run --env tags="@smoke or @api"
 ```
 
 ### Executar Arquivo Específico

@@ -13,7 +13,7 @@ on:
           - edge
         default: chrome
       tags:
-        description: "Tags dos cenários (ex: @smoke, @api, @e2e)"
+        description: "Expressão de tags (ex: @smoke, @api, '@smoke and @positivo')"
         required: false
         type: string
         default: ""
@@ -48,7 +48,7 @@ jobs:
           spec: ${{ inputs.spec }}
         env:
           CYPRESS_baseUrl: https://www.automationexercise.com
-          CYPRESS_grepTags: ${{ inputs.tags }}
+          CYPRESS_tags: ${{ inputs.tags }}
 
       - name: 📊 Generate Test Report
         if: always()
@@ -80,6 +80,7 @@ jobs:
           name: manual-reports-${{ inputs.browser }}-${{ github.run_number }}
           path: |
             reports/**/*
+            cypress/reports/**/*
             cypress/evidencias/**/*.html
             cypress/evidencias/**/*.txt
           if-no-files-found: ignore
