@@ -1,5 +1,6 @@
 # 🎯 HCXpert - Desafio Técnico QA/SDET 2026
 
+[![CI](https://github.com/nobbre/teste_hcxpert/actions/workflows/auto-pr.yaml/badge.svg?branch=desenvolvimento)](https://github.com/nobbre/teste_hcxpert/actions/workflows/auto-pr.yaml)
 [![Cypress](https://img.shields.io/badge/Cypress-15.18.1-green.svg)](https://www.cypress.io/)
 [![Cucumber](https://img.shields.io/badge/Cucumber-BDD-brightgreen.svg)](https://cucumber.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-20.x-green.svg)](https://nodejs.org/)
@@ -7,7 +8,11 @@
 
 ## 📋 Sobre o Projeto
 
-Este projeto foi desenvolvido como resposta ao **Desafio Técnico de Engenharia de Qualidade (QA/SDET)** da HCXpert. Implementa uma solução completa de automação de testes utilizando as melhores práticas e tecnologias modernas.
+Este projeto foi desenvolvido como resposta ao **Desafio Técnico de Engenharia de Qualidade (QA/SDET)** da HCXpert. Implementa automação de testes E2E e de API com Cypress, Cucumber (BDD) e Page Object Model, executada a cada push em uma esteira do GitHub Actions.
+
+**Autor:** Antonio Nobre Machado — QA Automation / Quality Engineer · [LinkedIn](https://www.linkedin.com/in/nobbre)
+
+**Em números:** 5 features · 24 cenários (positivos e negativos) · 4 Page Objects · testes de UI e de API
 
 ### 🎓 Objetivo
 
@@ -92,8 +97,8 @@ teste_hcxpert/
 
 ### Pré-requisitos
 
-- **Node.js** 18.x ou superior
-- **npm** 8.x ou superior
+- **Node.js** 20.x (mesma versão usada na esteira de CI)
+- **npm** (instalado junto com o Node.js)
 - **Git** 2.x ou superior
 
 ### Instalação Passo a Passo
@@ -169,13 +174,13 @@ npm run test:api
 npm run test:smoke
 
 # Testes positivos
-npx cypress run --env grepTags=@positivo
+npx cypress run --env tags=@positivo
 
 # Testes negativos
-npx cypress run --env grepTags=@negativo
+npx cypress run --env tags=@negativo
 
 # Testes de API
-npx cypress run --env grepTags=@api
+npx cypress run --env tags=@api
 ```
 
 ## 📊 Relatórios e Evidências
@@ -331,24 +336,16 @@ XRAY_CLIENT_SECRET=seu_client_secret
 XRAY_PROJECT_KEY=HCXP
 ```
 
-### Pipeline CI/CD (Exemplo)
+### Pipeline CI/CD (GitHub Actions)
 
-```yaml
-# .github/workflows/tests.yml
-name: E2E Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
-      - run: npm run report
-```
+O projeto tem duas esteiras em `.github/workflows/` (detalhes em [`.github/workflows/README.md`](.github/workflows/README.md)):
+
+| Workflow | Quando roda | O que faz |
+|----------|-------------|-----------|
+| `auto-pr.yaml` | A cada push em qualquer branch, exceto `main` | Executa todos os cenários no Chrome (headless), publica evidências e relatório como artifacts e, se os testes passarem, abre automaticamente a Pull Request para `main` |
+| `manual-tests.yaml` | Sob demanda (*Run workflow*) | Permite escolher navegador (Chrome, Firefox, Edge), filtrar por tag e executar uma feature específica |
+
+Ou seja, nenhum código chega à `main` sem a suíte de testes aprovada.
 
 ## 📝 Boas Práticas Implementadas
 
@@ -390,7 +387,7 @@ jobs:
 ### ✅ PARTE 3 - Critérios de Avaliação
 
 - [x] Organização do código (POM, reutilização)
-- [x] Execução limpa (zero erros)
+- [x] Execução aprovada na esteira de CI (ver badge no topo)
 - [x] Tratamento de assincronismo
 - [x] Evidências e scripts funcionais
 - [x] Relatório de entregas (ver matriz abaixo)
@@ -399,8 +396,8 @@ jobs:
 
 | Requisito | Status | Observações |
 |-----------|--------|-------------|
-| **Estrutura de Diretórios** | ✅ Completo | Aderência 100% ao layout especificado |
-| **Arquivos .feature** | ✅ Completo | 5 features, 20+ cenários |
+| **Estrutura de Diretórios** | ✅ Completo | Segue o layout de pastas especificado no desafio |
+| **Arquivos .feature** | ✅ Completo | 5 features, 24 cenários |
 | **Step Definitions** | ✅ Completo | Todos os passos implementados |
 | **Page Objects** | ✅ Completo | 4 Page Objects (Home, Login, Products, Cart) |
 | **Fixtures** | ✅ Completo | users.json com dados estruturados |
@@ -467,9 +464,9 @@ cy.get('.elemento').click({ force: true })
 
 ## 📞 Suporte e Contato
 
-**Candidato:** [Seu Nome]  
-**Email:** [seu.email@example.com]  
-**LinkedIn:** [Seu LinkedIn]  
+**Autor:** Antonio Nobre Machado  
+**Email:** nobbre@gmail.com  
+**LinkedIn:** [linkedin.com/in/nobbre](https://www.linkedin.com/in/nobbre)  
 **GitHub:** [github.com/nobbre/teste_hcxpert](https://github.com/nobbre/teste_hcxpert)
 
 ## 📄 Licença
